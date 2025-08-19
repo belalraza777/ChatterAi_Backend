@@ -35,7 +35,7 @@ app.use(cookieParser());
 app.use(express.static('public'));
 //cors 
 app.use(cors({
-  origin: "http://localhost:5000",  // React dev server URL & port
+  origin: process.env.FRONTEND_URL,  // React dev server URL & port
   credentials: true,                 // Allow cookies to be sent
 }));
 
