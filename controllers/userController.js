@@ -27,7 +27,7 @@ export const loginUser = async (req, res) => {
         process.env.JWT_SECRET
     );
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000,  });
 
     return res.status(200).json({
         success: true,
@@ -62,7 +62,7 @@ export const signupUser = async (req, res) => {
         process.env.JWT_SECRET
     );
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000,  });
 
     return res.status(201).json({
         success: true,
@@ -85,12 +85,22 @@ export const logoutUser = (req, res) => {
 
 // check user Login
 export const checkUserLogin = (req, res) => {
-    const token = req.cookies.token;
-    if (!token) return res.status(401).json({ success: false, authenticated: false });
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        res.status(200).json({ success: true, authenticated: true, user: { decoded } });
-    } catch (err) {
-        res.send(401).json({ authenticated: false });
+    const token = req.cookies?.token;
+
+    // No token → Unauthorized
+    if (!token) {
+        return res.sendStatus(401);
     }
+
+    // Verify JWT
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return res.sendStatus(401); // Invalid or expired token
+        }
+        // Valid token → OK
+        res.status(200).json({
+            authenticated: true,
+            user: decoded
+        });
+    });
 };
