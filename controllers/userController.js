@@ -82,3 +82,15 @@ export const logoutUser = (req, res) => {
         data: "Logged out successfully"
     });
 };
+
+// check user Login
+export const checkUserLogin = (req, res) => {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ success: false, authenticated: false });
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.status(200).json({ success: true, authenticated: true, user: { decoded } });
+    } catch (err) {
+        res.send(401).json({ authenticated: false });
+    }
+};
