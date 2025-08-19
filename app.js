@@ -19,7 +19,7 @@ import userRouter from './routes/user.js';
 //connect db
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb://127.0.0.1:27017/ChatBot");
+        await mongoose.connect(process.env.MONGODB_URL);
         console.log("Connected with Database!");
     } catch (err) {
         console.log("Failed to connect with Db", err);
