@@ -6,11 +6,11 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import cors from "cors";
 
-import path from "path";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// import path from "path";
+// import { fileURLToPath } from 'url';
+// import { dirname } from 'path';
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
 import chatRouter from './routes/chat.js';
 import userRouter from './routes/user.js';
@@ -39,9 +39,6 @@ app.use(cors({
   credentials: true,                 // Allow cookies to be sent
 }));
 
-
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "/views"));
 
 // routes
 app.use("/api/chat", chatRouter);
