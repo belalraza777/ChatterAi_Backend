@@ -27,7 +27,7 @@ export const loginUser = async (req, res) => {
         process.env.JWT_SECRET
     );
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000,sameSite: "none",   });
+    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true, });
 
     return res.status(200).json({
         success: true,
@@ -62,7 +62,7 @@ export const signupUser = async (req, res) => {
         process.env.JWT_SECRET
     );
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none",  });
+    res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true, });
 
     return res.status(201).json({
         success: true,
@@ -76,7 +76,10 @@ export const signupUser = async (req, res) => {
 
 // Logout user
 export const logoutUser = (req, res) => {
-    res.clearCookie("token");
+    res.clearCookie("token",{
+        sameSite: "none",
+        secure: true
+    });
     return res.status(200).json({
         success: true,
         data: "Logged out successfully"
