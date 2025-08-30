@@ -33,6 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static('public'));
+
 //cors 
 app.use(cors({
   origin: process.env.FRONTEND_URL,  // React dev server URL & port
